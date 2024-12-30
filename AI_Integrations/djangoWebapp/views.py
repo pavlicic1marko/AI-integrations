@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
+chat_history =[]
 
 def home(reqeuest):
     return render(reqeuest, 'authenticate/home.html', {})
@@ -52,7 +53,8 @@ def chat_gpt_prompt_page(request):
         if request.method == 'POST':
             question = request.POST["question"]
             answer = 'this is AI answer'
-            return render(request, 'authenticate/prompt.html', {'questions': [{'question':question,'answer':answer},{'question':question,'answer':answer}]})
+            chat_history.append({'question':question,'answer':answer})
+            return render(request, 'authenticate/prompt.html', {'questions': chat_history})
         else:
             return render(request, 'authenticate/prompt.html')
     else:
