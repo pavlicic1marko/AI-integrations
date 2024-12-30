@@ -49,7 +49,11 @@ def register_user(request):
 
 def chat_gpt_prompt_page(request):
     if request.user.is_authenticated:
-        return render(request, 'authenticate/prompt.html')
+        if request.method == 'POST':
+            question = request.POST["question"]
+            return render(request, 'authenticate/prompt.html', {'question': [question]})
+        else:
+            return render(request, 'authenticate/prompt.html')
     else:
         return render(request, 'authenticate/home.html')
 

@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Prompt</title>
-</head>
-<body>
-    <h1>This is chat prompt page</h1>
+{% extends 'authenticate/base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <h1>Ask Chat-Gpt:</h1>
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <input type="text" class="form-control"  placeholder="Enter question" name="question">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Ask</button>
+    </form>
+    {% for field in question %}
+        <p> Answer: {{ field }} </p>
+
+    {% endfor %}
+
+
+{% endblock %}
