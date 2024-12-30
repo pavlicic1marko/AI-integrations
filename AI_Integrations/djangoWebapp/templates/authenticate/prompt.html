@@ -11,8 +11,10 @@
 
       <button type="submit" class="btn btn-primary">Ask</button>
     </form>
-    {% for field in question %}
-        <p> Answer: {{ field }} </p>
+    {% for field in questions %}
+        <p> question: {{ field.question }} </p>
+        <p> answer: {{ field.answer }} </p>
+
 
     {% endfor %}
 
