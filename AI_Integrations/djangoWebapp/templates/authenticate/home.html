@@ -1,0 +1,13 @@
+{% extends 'authenticate/base.html' %}
+
+{% block content %}
+
+<h1>This is the home page</h1>
+
+      {% if user.is_authenticated %}
+        <p>name: {{ user.first_name }}</p>
+        <p>username: {{ user.username }}</p>
+        <p>email: {{ user.email }}</p>
+      {% endif %}
+
+{% endblock %}
