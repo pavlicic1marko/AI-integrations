@@ -52,7 +52,7 @@ def chat_gpt_prompt_page(request):
         if request.method == 'POST':
             question = request.POST["question"]
             answer = 'this is AI answer'
-            return render(request, 'authenticate/prompt.html', {'questions': [{'question':question,'answer':answer}]})
+            return render(request, 'authenticate/prompt.html', {'questions': [{'question':question,'answer':answer},{'question':question,'answer':answer}]})
         else:
             return render(request, 'authenticate/prompt.html')
     else:
