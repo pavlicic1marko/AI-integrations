@@ -46,3 +46,10 @@ def register_user(request):
 
     context = {'form':form}
     return render(request, 'authenticate/register.html', context)
+
+def chat_gpt_prompt_page(request):
+    if request.user.is_authenticated:
+        return render(request, 'authenticate/prompt.html')
+    else:
+        return render(request, 'authenticate/home.html')
+
