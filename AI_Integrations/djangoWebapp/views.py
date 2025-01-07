@@ -1,8 +1,9 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .ChatGpt.client import ask_chat_gpt
 from .forms import SignUpForm
+
 chat_history =[]
 
 def home(reqeuest):
@@ -52,7 +53,7 @@ def chat_gpt_prompt_page(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             question = request.POST["question"]
-            answer = 'this is AI answer'
+            answer = ask_chat_gpt(question)
             chat_history.append({'question':question,'answer':answer})
             return render(request, 'authenticate/prompt.html', {'questions': chat_history})
         else:
