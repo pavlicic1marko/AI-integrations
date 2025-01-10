@@ -6,4 +6,4 @@ class ChatGptPrompts(models.Model):
 
 
     def __str__(self):
-        return self.item
+        return self.question
