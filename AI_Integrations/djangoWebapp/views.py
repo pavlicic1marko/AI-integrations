@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .ChatGpt.client import ask_chat_gpt
 from .forms import SignUpForm
+from .models import ChatGptPrompts
 
 chat_history =[]
 
@@ -37,8 +39,6 @@ def register_user(request):
             form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request, ('You Have Registered...'))
@@ -54,6 +54,12 @@ def chat_gpt_prompt_page(request):
         if request.method == 'POST':
             question = request.POST["question"]
             answer = ask_chat_gpt(question)
+
+            chat_gpt_prompt = ChatGptPrompts(question=question, answer=answer, user=request.user )
+            chat_gpt_prompt.save()  # Save to the database
+
+
+
             chat_history.append({'question':question,'answer':answer})
             return render(request, 'authenticate/prompt.html', {'questions': chat_history})
         else:
