@@ -5,6 +5,7 @@ from django.contrib import messages
 from .ChatGpt.client import ask_chat_gpt
 from .forms import SignUpForm
 from .models import ChatGptPrompts
+from .ollamaClient.ollama_client import ollama_chat
 
 chat_history = []
 
@@ -74,7 +75,7 @@ def ollama_prompt_page(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             question = request.POST["question"]
-            answer = 'test'
+            answer = ollama_chat(question)
 
             chat_gpt_prompt = ChatGptPrompts(question=question, answer=answer, user=request.user)
             chat_gpt_prompt.save()  # Save to the database
