@@ -88,3 +88,7 @@ def ollama_prompt_page(request):
 
     else:
         return render(request, 'authenticate/home.html')
+
+
+def user_chat_history(request):
+    return render(request, 'authenticate/chat-history.html',{'all_items': [{'question':'is serbia in eu', 'answer':'no', 'aiModel':'gpt-turbo'},{'question':'is serbia in eu', 'answer':'no', 'aiModel':'gpt-turbo'}]})

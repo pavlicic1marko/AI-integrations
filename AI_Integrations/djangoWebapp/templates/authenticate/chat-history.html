@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat History</title>
+</head>
+<body>
+    <h1>Chat History:</h1>
+
+    {%if all_items %}
+        <table class="table table-bordered">
+        {% for object in all_items %}
+                <tr>
+                    <td><p>question: {{object.question}} </p></td>
+                    <td><p>answer: {{object.answer}} </p></td>
+                    <td><p>ai-model:{{object.aiModel}} </p></td>
+                </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+
+
+
+
+</body>
+</html>
