@@ -91,6 +91,6 @@ def ollama_prompt_page(request):
 
 
 def user_chat_history(request):
-    all_items = ChatGptPrompts.objects.all
+    all_items = ChatGptPrompts.objects.filter(user=request.user, )
 
     return render(request, 'authenticate/chat-history.html',{'all_items': all_items})
