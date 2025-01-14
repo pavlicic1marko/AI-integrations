@@ -30,7 +30,7 @@ def login_user(request):
             messages.success(request, ('You Have been logged in!'))
             return redirect('home')
         else:
-            messages.error(request, ('Error'))
+            messages.error(request, ('The user with credentials does not exist'))
             return redirect('login')
     else:
         return render(request, 'authenticate/login.html', {})
