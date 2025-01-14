@@ -57,10 +57,12 @@ def register_user(request):
 def chat_gpt_prompt_page(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            question = request.POST["question"]
-            answer = ask_chat_gpt(question)
+            question = request.POST.get('question')
+            model = request.POST.get('category')
 
-            chat_gpt_prompt = ChatGptPrompts(question=question, answer=answer, user=request.user, aiModel='gpt-4')
+            answer = ask_chat_gpt(question, model)
+
+            chat_gpt_prompt = ChatGptPrompts(question=question, answer=answer, user=request.user, aiModel=model)
             chat_gpt_prompt.save()  # Save to the database
 
             chat_history.append({'question': question, 'answer': answer})
