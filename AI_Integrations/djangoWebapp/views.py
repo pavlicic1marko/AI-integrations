@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .ChatGpt.client import ask_chat_gpt
-from .forms import SignUpForm
+from .forms import SignUpForm, EditProfileForm
 from .models import ChatGptPrompts
 from .ollamaClient.ollama_client import ollama_chat
 
@@ -16,7 +16,7 @@ def home(reqeuest):
 
 def logout_user(request):
     logout(request)
-    messages.success(request, ('You Have Been Logged Out...'))
+    messages.success(request, ('You Have Been Logged Out'))
     return redirect('home')
 
 
@@ -30,7 +30,7 @@ def login_user(request):
             messages.success(request, ('You Have been logged in!'))
             return redirect('home')
         else:
-            messages.error(request, ('Error'))
+            messages.error(request, ('The user with credentials does not exist'))
             return redirect('login')
     else:
         return render(request, 'authenticate/login.html', {})
@@ -45,7 +45,7 @@ def register_user(request):
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, ('You Have Registered...'))
+            messages.success(request, ('You Have Registered successfully'))
             return redirect('home')
     else:
         form = SignUpForm()
@@ -94,3 +94,29 @@ def user_chat_history(request):
     all_items = ChatGptPrompts.objects.filter(user=request.user, )
 
     return render(request, 'authenticate/chat-history.html',{'all_items': all_items})
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ('You Have Edited Your Profile Information'))
+            return redirect('home')
+    else:
+        form = EditProfileForm(instance=request.user)
+
+    context = {'form': form}
+    return render(request, 'authenticate/edit_profile.html', context)
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ('you have successfully changed your password'))
+            return redirect('home')
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+    context = {'form': form}
+    return render(request, 'authenticate/change_password.html', context)

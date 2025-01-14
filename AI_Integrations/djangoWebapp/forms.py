@@ -29,6 +29,11 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
 
+class EditProfileForm(UserChangeForm):
+    password = forms.CharField(label="", widget=forms.TextInput(attrs={'type': 'hidden'}))
 
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'password',)
 
 
