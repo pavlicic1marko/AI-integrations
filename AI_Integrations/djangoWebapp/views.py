@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .ChatGpt.client import ask_chat_gpt
-from .forms import SignUpForm
+from .forms import SignUpForm, EditProfileForm
 from .models import ChatGptPrompts
 from .ollamaClient.ollama_client import ollama_chat
 
@@ -94,3 +94,16 @@ def user_chat_history(request):
     all_items = ChatGptPrompts.objects.filter(user=request.user, )
 
     return render(request, 'authenticate/chat-history.html',{'all_items': all_items})
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ('You Have Edited Your Profile...'))
+            return redirect('home')
+    else:
+        form = EditProfileForm(instance=request.user)
+
+    context = {'form': form}
+    return render(request, 'authenticate/edit_profile.html', context)
