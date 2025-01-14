@@ -10,5 +10,5 @@ urlpatterns = [
     path('ollama-prompt/', views.ollama_prompt_page, name='ollama-prompt'),
     path('chat-history/', views.user_chat_history, name='history'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
-
+    path('change_password/', views.change_password, name='change_password'),
 ]
