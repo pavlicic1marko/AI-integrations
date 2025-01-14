@@ -60,7 +60,7 @@ def chat_gpt_prompt_page(request):
             question = request.POST["question"]
             answer = ask_chat_gpt(question)
 
-            chat_gpt_prompt = ChatGptPrompts(question=question, answer=answer, user=request.user)
+            chat_gpt_prompt = ChatGptPrompts(question=question, answer=answer, user=request.user, aiModel='gpt-4')
             chat_gpt_prompt.save()  # Save to the database
 
             chat_history.append({'question': question, 'answer': answer})
@@ -77,7 +77,7 @@ def ollama_prompt_page(request):
             question = request.POST["question"]
             answer = ollama_chat(question)
 
-            chat_gpt_prompt = ChatGptPrompts(question=question, answer=answer, user=request.user)
+            chat_gpt_prompt = ChatGptPrompts(question=question, answer=answer, user=request.user, aiModel='ollama 3.1:1b')
             chat_gpt_prompt.save()  # Save to the database
 
             chat_history_llama = [{'question': question, 'answer': answer}]
@@ -88,3 +88,9 @@ def ollama_prompt_page(request):
 
     else:
         return render(request, 'authenticate/home.html')
+
+
+def user_chat_history(request):
+    all_items = ChatGptPrompts.objects.filter(user=request.user, )
+
+    return render(request, 'authenticate/chat-history.html',{'all_items': all_items})
