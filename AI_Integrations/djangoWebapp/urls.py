@@ -8,6 +8,6 @@ urlpatterns = [
     path('register/',views.register_user,name='register'),
     path('prompt/', views.chat_gpt_prompt_page, name='prompt'),
     path('ollama-prompt/', views.ollama_prompt_page, name='ollama-prompt'),
-    path('chat-history/', views.user_chat_history, name='chat-history'),
+    path('chat-history/', views.user_chat_history, name='history'),
 
 ]
