@@ -1,13 +1,26 @@
 {% extends 'authenticate/base.html' %}
 
 {% block content %}
-    <h1>Ask llama 3.1:1b</h1>
+    <h1>Ask ollama AI</h1>
     <form method="POST">
       {% csrf_token %}
 
       <div class="form-group">
         <input type="text" class="form-control"  placeholder="Enter question" name="question">
       </div>
+
+      <div class="form-group">
+        <label for="category">Select AI Model:</label>
+        <select class="form-control" id="category" name="category">
+          <option value="ollama 3.1:1b">llama 3.1:1b</option>
+          <option value="qwen2.5-coder:0.5b">qwen2.5-coder:0.5b</option>
+
+
+        </select>
+          <h5>ollama 3.1:1b is the fastest model</h5>
+
+      </div>
+
 
       <button type="submit" class="btn btn-primary">Ask</button>
     </form>
