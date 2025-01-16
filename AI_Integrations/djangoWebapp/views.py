@@ -6,6 +6,8 @@ from .ChatGpt.client import ask_chat_gpt
 from .forms import SignUpForm, EditProfileForm
 from .models import ChatGptPrompts
 from .ollamaClient.ollama_client import ollama_chat
+from .ollamaClient.llava_client import  describe_image
+
 
 chat_history = []
 
@@ -127,7 +129,9 @@ def change_password(request):
 def llava_promp_page(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            return render(request, 'authenticate/llava-prompt.html', )
+            question = request.POST.get('question')
+            image_description = describe_image()
+            return render(request, 'authenticate/llava-prompt.html',{'questions': [{'question':'describe image','answer':image_description}]} )
 
         else:
             return render(request, 'authenticate/llava-prompt.html')
