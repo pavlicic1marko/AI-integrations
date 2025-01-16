@@ -131,6 +131,10 @@ def llava_promp_page(request):
         if request.method == 'POST':
             question = request.POST.get('question')
             image_description = describe_image()
+
+            chat_gpt_prompt = ChatGptPrompts(question=question, answer=image_description, user=request.user, aiModel='llava:7b')
+            chat_gpt_prompt.save()  # Save to the database
+
             return render(request, 'authenticate/llava-prompt.html',{'questions': [{'question':'describe image','answer':image_description}]} )
 
         else:
