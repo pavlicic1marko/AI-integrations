@@ -1,0 +1,26 @@
+{% extends 'authenticate/base.html' %}
+
+{% block content %}
+    <h1>upload an image to llava AI to describe it for you</h1>
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <input type="text" class="form-control"  placeholder="Enter question" name="question">
+      </div>
+
+          <h5>visual models are slow</h5>
+
+
+
+      <button type="submit" class="btn btn-primary">Describe</button>
+    </form>
+    {% for field in questions %}
+        <p> question: {{ field.question }} </p>
+        <p> answer: {{ field.answer }} </p>
+
+
+    {% endfor %}
+
+
+{% endblock %}

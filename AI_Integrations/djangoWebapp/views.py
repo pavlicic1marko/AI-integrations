@@ -123,3 +123,16 @@ def change_password(request):
 
     context = {'form': form}
     return render(request, 'authenticate/change_password.html', context)
+
+def llava_promp_page(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            return render(request, 'authenticate/llava-prompt.html', )
+
+        else:
+            return render(request, 'authenticate/llava-prompt.html')
+    else:
+        return render(request, 'authenticate/home.html')
+
+
+
